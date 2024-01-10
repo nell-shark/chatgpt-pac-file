@@ -1,16 +1,15 @@
 function FindProxyForURL(url, host) {
-    var proxySites = [
-        "openai.com",
-        "cdn.oaistatic.com"
-    ];
+  var proxySites = [".openai.com", "cdn.oaistatic.com"];
 
-    if (proxySites.some(function(site) {
-        return dnsDomainIs(host, site);
-    }))
-        return "SOCKS5 host:port"; // UPDATE 'host' and 'port'
-        // return "HTTPS host:port"
-        // return "PROXY host:port"
+  var isProxySite = proxySites.some(function (site) {
+    return dnsDomainIs(host, site);
+  });
 
+  if (isProxySite) {
+    // Replace "host:port" with your server details
+    // If you intended to use an HTTPS proxy, change "SOCKS5" to "HTTPS"
+    return "SOCKS5 host:port";
+  }
 
-    return "DIRECT";
+  return "DIRECT";
 }
