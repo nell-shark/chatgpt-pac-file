@@ -6,17 +6,13 @@ This repository contains a JavaScript PAC (Proxy Auto-Config) file that is desig
 function FindProxyForURL(url, host) {
   var proxySites = [".openai.com", "cdn.oaistatic.com"];
 
-  var isProxySite = proxySites.some(function (site) {
+  var shouldUseProxy = proxySites.some(function (site) {
     return dnsDomainIs(host, site);
   });
 
-  if (isProxySite) {
-    // Replace "host:port" with your server details
-    // If you intended to use an HTTPS proxy, change "SOCKS5" to "HTTPS"
-    return "SOCKS5 host:port";
-  }
-
-  return "DIRECT";
+  // Replace "host:port" with your server details
+  // If you intended to use an HTTPS proxy, change "SOCKS5" to "HTTPS"
+  return shouldUseProxy ? "SOCKS5 host:port" : "DIRECT";
 }
 ```
 
@@ -35,6 +31,6 @@ return "SOCKS5 host:port";
 3. Upload the PAC file to any server (e.g., Discord, Google Drive, OneDrive). 
 > **_NOTE:_**  You can't use local file, see [NOTE: File://-based Proxy Scripts Deprecated](https://learn.microsoft.com/en-gb/archive/blogs/ieinternals/understanding-web-proxy-configuration#note-file-based-proxy-scripts-deprecated)
 
-4. Open Settings > Network & internet > Proxy > Use setup script > Edit. Turn on 'Use setup script' and set **YOUR_URL** in 'Script address'
+4. Open Settings > Network & internet > Proxy > Use setup script > Edit. Turn on 'Use setup script' and set **YOUR_PAC_FILE_URL** in 'Script address'
 
 5. Check the result: [chat.openai.com](https://chat.openai.com/)
